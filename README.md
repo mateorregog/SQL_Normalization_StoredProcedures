@@ -13,7 +13,7 @@ El proyecto se desarrolló llevando a cabo los siguientes pasos:
 
 [**1.)** ](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#1-normalizaci%C3%B3n-y-plantemamiento-del-modelo-relacional)Normalización del dataset inicial y planteamiento del modelo relacional.
 
-[**2.)** ](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#2-creaci%C3%B3n-de-tablas-relaciones-y-dependencias-del-modelo-planteado)Creación de script de SQL para la creación de la base de datos, tablas y dependencias correspondiente según el modelo relacional planteado en el punto anterior.
+[**2.)** ](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#2-creaci%C3%B3n-de-tablas-relaciones-y-dependencias-del-modelo-planteado). Desarrollo de scripts de SQL para la creación de la base de datos, tablas y dependencias  según el modelo relacional planteado en el punto anterior.
 
 [**3.)**](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#3-creaci%C3%B3n-de-funciones-para-la-limpieza-de-datos-y-procedimientos-almacenados-para-la-carga-de-datos) Perfilado,limpieza de datos y carga en las tablas planteadas en el modelo relacional.
 
