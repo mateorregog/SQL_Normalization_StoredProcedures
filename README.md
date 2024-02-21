@@ -1,5 +1,12 @@
 # Normalización, modelamiento, creación e implementación de un modelo relacional en SQL Server a partir de un caso de negocio
-El proyecto se centra en la normalización, creación e implementación de un modelo relacional a partir de una tabla existente que cuenta con redundancia y poca estructuración de datos. En el proyecto se usa T-SQL y SQL Server como herramientas principales para la ejecución del proyecto, y la herramienta gratuita https://dbdiagram.io/home para la creación del modelo relacional. 
+
+El proyecto se centra en la normalización, modelamiento, creación e implementación de un modelo relacional a partir de una tabla existente que cuenta con redundancia y poca estructuración de datos. Posterior a los pasos anteriormente mencionados, se realiza un reporte en SQL con información de negocio útil para la toma de decisiones.  
+
+## Principales tecnologías utilizadas:
+
+- SQL Server
+- T-SQL 
+- dbDiagram.io
 
 ## Metodología
 El proyecto se desarrolló llevando a cabo los siguientes pasos:
