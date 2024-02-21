@@ -4,13 +4,13 @@ El proyecto se centra en la normalización, creación e implementación de un mo
 ## Metodología
 El proyecto se desarrolló llevando a cabo los siguientes pasos:
 
-**1.)** Normalización del dataset inicial y planteamiento del modelo relacional.
+[**1.)** ](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#1-normalizaci%C3%B3n-y-plantemamiento-del-modelo-relacional)Normalización del dataset inicial y planteamiento del modelo relacional.
 
-**2.)** Creación de script de SQL para la creación de la base de datos, tablas y dependencias correspondiente según el modelo relacional planteado en el punto anterior.
+[**2.)** ](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#2-creaci%C3%B3n-de-tablas-relaciones-y-dependencias-del-modelo-planteado)Creación de script de SQL para la creación de la base de datos, tablas y dependencias correspondiente según el modelo relacional planteado en el punto anterior.
 
-**3.)** Perfilado,limpieza de datos y carga en las tablas planteadas en el modelo relacional
+[**3.)**](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#3-creaci%C3%B3n-de-funciones-para-la-limpieza-de-datos-y-procedimientos-almacenados-para-la-carga-de-datos) Perfilado,limpieza de datos y carga en las tablas planteadas en el modelo relacional.
 
-**4.)** Se solicita la creación de un reporte en SQL que devuelve una tabla con la siguiente estructura:
+[**4.)**](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/README.md#4-creaci%C3%B3n-del-reporte-en-sql) Se solicita la creación de un reporte en SQL que devuelve una tabla con la siguiente estructura:
 
 
 | Mes/Año | Tipo de inmueble | País | Suma venta en US | Suma alquiler en US | Promedio venta en US | Promedio alquiler en US | Unidades vendidas | Unidades alquiladas|
