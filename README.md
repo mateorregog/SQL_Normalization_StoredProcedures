@@ -411,7 +411,7 @@ BEGIN
         telefVendedor VARCHAR(50)
     );
 
-    -- Insertar registros transformados en la tabla temporal
+    -- Insertar registros transformados en la tabla temporal haciendo uso de las funciones de limpieza previamente creadas
     INSERT INTO #RegistrosTransformados
 	SELECT CONVERT(INT,[Referencia Venta]) AS referenciaVenta
       ,CONVERT(INT,[Id Vendedor]) AS idVendedor
