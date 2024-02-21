@@ -246,7 +246,7 @@ GO
 ```
 
 
-## 3.) Creación de funciones para la limpieza de datos y procedimientos almacenados para la carga de datos según el modelo planteado
+## 3.) Creación de funciones para la limpieza de datos y procedimientos almacenados para la carga de datos 
 ```sql
 --3.1.1) Convertir fecha
 SET ANSI_NULLS ON
