@@ -1,13 +1,36 @@
-# Normalización, creación e implementación de un modelo relacional en SQL Server a partir de un caso de negocio
+# Normalización, modelamiento, creación e implementación de un modelo relacional en SQL Server a partir de un caso de negocio
 El proyecto se centra en la normalización, creación e implementación de un modelo relacional a partir de una tabla existente que cuenta con redundancia y poca estructuración de datos. En el proyecto se usa T-SQL y SQL Server como herramientas principales para la ejecución del proyecto, y la herramienta gratuita https://dbdiagram.io/home para la creación del modelo relacional. 
 
 ## Metodología
-El proyecto se desarrolló llevando a cabo los siguientes pasos:</br></br>
-**1.)** Normalización del dataset inicial y planteamiento del modelo relacional.</br>
-**2.)** Creación de script de SQL para la creación de la base de datos, tablas y dependencias correspondiente según el modelo relacional planteado en el punto anterior.</br>
-**3.)** Perfilado,limpieza de datos y carga en las tablas planteadas en el modelo relacional
-**4.)**
+El proyecto se desarrolló llevando a cabo los siguientes pasos:
 
+**1.)** Normalización del dataset inicial y planteamiento del modelo relacional.
+
+**2.)** Creación de script de SQL para la creación de la base de datos, tablas y dependencias correspondiente según el modelo relacional planteado en el punto anterior.
+
+**3.)** Perfilado,limpieza de datos y carga en las tablas planteadas en el modelo relacional
+
+**4.)** Se solicita la creación de un reporte en SQL que devuelve una tabla con la siguiente estructura:
+
+
+| Mes/Año | Tipo de inmueble | País | Suma venta en US | Suma alquiler en US | Promedio venta en US | Promedio alquiler en US | Unidades vendidas | Unidades alquiladas|
+|---------|------------------|------|------------------|---------------------|----------------------|-------------------------|-------------------|--------------------|
+
+Dado que las transacciones de la base de datos original contiene diferentes tipos de monedas, es preciso hacer algunas funciones de conversión de cada una de ellas con base en la siguiente tabla:
+
+| País/Región | Divisa | Símbolo divisa | Cambio USD | 
+|-------------|--------|--------------------|------------|
+|RU|Libra esterlina|£|1,32|
+|Eurozona|Euro|€|1,1|
+|EE.UU|Dólar|$|1|
+|Noruega|Corona noruega|Kr|0,11|
+|Suiza|Franco suizo|Fr|1,07|
+|Corea|Won surcoreano|₩|0,00082|
+
+Este paso implica dos tareas: 
+ - Creación de una función para la conversión de divisas.
+ - Creación de procedimiento almacenado que retorna el dataset solicitado en el reporte. Procedimiento almacenado con parámetros de fecha que se usarán para filtrar la información según se requiera.
+   
 ##  Haz click en el enlace de abajo para descargar el dataset inicial del proyecto. 
 El dataset continene información sobre la gestión de alquiler, venta y demás servicios ofrecidos por una inmobiliaria, así como datos de clientes, vendedores y ubicaciones geográficas. 
 [Descargar archivo Excel](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/BBDD%20Ventas.xlsx
@@ -640,4 +663,90 @@ BEGIN
 END;
 GO
 ```
+## 4.) Creación del reporte en SQL
+
+## 4.1.) Creación de la función para la conversión de divisas
+
+```sql
+CREATE FUNCTION dbo.CalcularValorEnDolar (@CodDivisa INT)
+RETURNS DECIMAL(18, 2)
+AS
+BEGIN
+    DECLARE @ValorEnDolar DECIMAL(18, 2);
+
+    SELECT @ValorEnDolar = 
+        CASE
+            WHEN @CodDivisa = 2 THEN 1.00
+            WHEN @CodDivisa = 3 THEN 1.32
+            WHEN @CodDivisa = 4 THEN 0.00082
+            WHEN @CodDivisa = 5 THEN 1.07
+            WHEN @CodDivisa = 6 THEN 0.11
+            WHEN @CodDivisa = 7 THEN 1.10
+            ELSE 1.00 -- Valor predeterminado si no coincide con ningún codDivisa conocido
+        END;
+
+    RETURN @ValorEnDolar;
+END;
+```
+## 4.2) Creación de procedimiento almacenado que retorna el reporte solicitado 
+
+El procedimiento almacenado recibe parámetros de fecha que se usarán para filtrar la información según se requiera. Así mismo hace uso de la función creada en el paso anterior paa realizar la conversión de divisas requerida.
+
+```sql
+CREATE PROCEDURE SP_CalculoVentasPorFecha
+    @FechaInicio DATE,
+    @FechaFin DATE
+AS
+BEGIN
+    WITH calculo1 AS 
+    (
+        SELECT  
+            a.FechaVenta,
+            b.tipoInmueble,
+            c.Pais,
+            d.tipoOperacion,
+            e.simbolo,
+            SUM(PrecioVenta) AS SumPrecio,
+            COUNT(ReferenciaVenta) AS UnidadesVendidas,
+            dbo.CalcularValorEnDolar(e.[codDivisa]) AS ValorDolar,
+            dbo.CalcularValorEnDolar(e.[codDivisa]) * SUM(PrecioVenta) AS VentaTotalDolar
+        FROM [TPVentas].[dbo].[tbVentas] AS a
+        LEFT JOIN tbInmueble b ON a.codInmueble = b.codInmueble
+        LEFT JOIN tbCiudad ciu ON a.codCiudad = ciu.codCiudad
+        LEFT JOIN tbProvincia prov ON prov.codProvincia = ciu.codProvincia
+        LEFT JOIN tbPais c ON c.codPais = prov.codPais
+        LEFT JOIN tbOperacion d ON d.codOperacion = a.codOperacion
+        LEFT JOIN tbDivisa e ON e.codDivisa = a.codDivisa
+        WHERE a.FechaVenta BETWEEN @FechaInicio AND @FechaFin
+        GROUP BY
+            a.FechaVenta,
+            b.tipoInmueble,
+            c.Pais,
+            d.tipoOperacion,
+            e.simbolo,
+            e.codDivisa
+    ) 
+    SELECT  
+        FechaVenta,
+        tipoInmueble,
+        Pais,
+        tipoOperacion,
+        simbolo,
+        SUM(CASE WHEN tipoOperacion = 'Venta' THEN VentaTotalDolar END) AS 'Suma Venta Dolares',
+        SUM(CASE WHEN tipoOperacion = 'Alquiler' THEN VentaTotalDolar END) AS 'Suma Alquiler Dolares',
+        AVG(CASE WHEN tipoOperacion = 'Venta' THEN VentaTotalDolar END) AS 'Promedio Venta Dolares',
+        AVG(CASE WHEN tipoOperacion = 'Alquiler' THEN VentaTotalDolar END) AS 'Promedio Alquiler Dolares',
+        COUNT(CASE WHEN tipoOperacion = 'Venta' THEN VentaTotalDolar END) AS 'Unidades Vendidas',
+        COUNT(CASE WHEN tipoOperacion = 'Alquiler' THEN VentaTotalDolar END) AS 'Unidades Alquiladas'
+    FROM calculo1
+    GROUP BY
+        FechaVenta,
+        tipoInmueble,
+        Pais,
+        tipoOperacion,
+        simbolo;
+END
+
+```
+
 
