@@ -18,26 +18,27 @@ El modelo relacional planteado a partir del dataset compartido se muestra a cont
 ![pp1-02](https://github.com/mateorregog/SQL_Normalization_StoredProcedures/blob/main/diagramaRelacional.jpg)
 
 ## 2.)
-'''
---  FUNCIONES DE LIMPIEZA DE DATOS!!!!
-CREATE FUNCTION [dbo].[ConvertirFecha] (@fecha NVARCHAR(255))
-
-RETURNS DATE
-AS
-BEGIN
-    DECLARE @fechaResultado DATE;
-
-    -- Verificar si la fecha es '1900-01-01' o '-'
-    IF @fecha = '1900-01-01' OR @fecha = '-' OR @fecha = '00-01-1900'
+```sql
+    -- FUNCIONES DE LIMPIEZA DE DATOS!!!!
+    
+    CREATE FUNCTION [dbo].[ConvertirFecha] (@fecha NVARCHAR(255))
+    
+    RETURNS DATE
+    AS
     BEGIN
-        SET @fechaResultado = NULL; -- Devolver un espacio en blanco 
-    END
-    ELSE
-    BEGIN
-        -- Convertir la fecha en formato 'dd-mm-yyyy' a DATE
-        SET @fechaResultado = CONVERT(DATE, @fecha, 105);
-    END
-
-    RETURN @fechaResultado;
-END;
-'''
+        DECLARE @fechaResultado DATE;
+    
+        -- Verificar si la fecha es '1900-01-01' o '-'
+        IF @fecha = '1900-01-01' OR @fecha = '-' OR @fecha = '00-01-1900'
+        BEGIN
+            SET @fechaResultado = NULL; -- Devolver un espacio en blanco 
+        END
+        ELSE
+        BEGIN
+            -- Convertir la fecha en formato 'dd-mm-yyyy' a DATE
+            SET @fechaResultado = CONVERT(DATE, @fecha, 105);
+        END
+    
+        RETURN @fechaResultado;
+    END;
+```
