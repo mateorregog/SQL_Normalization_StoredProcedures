@@ -156,7 +156,7 @@ PRIMARY KEY CLUSTERED
 GO
 ```
 ```sql
---2.8) CReación tabla tbProvincia
+--2.8) Creación tabla tbProvincia
 /****** Object:  Table [dbo].[tbProvincia]    Script Date: 15/09/2023 21:47:59 ******/
 SET ANSI_NULLS ON
 GO
@@ -435,7 +435,7 @@ BEGIN
       ,dbo.LimpiarRegistro([Ciudad]) as ciudad
       ,dbo.LimpiarRegistro([Telefono comprador]) as telefComprador
       ,dbo.LimpiarRegistro([Telefono Vendedor]) as telefVendedor
-     FROM [TPVentas].[dbo].[BBDD$]
+     FROM [TPVentas].[dbo].[BBDD]
 
 	 -- Crear una tabla temporal para almacenar los vendedores únicos
 	CREATE TABLE #tbVendedor (
