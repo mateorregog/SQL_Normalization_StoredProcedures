@@ -627,15 +627,15 @@ BEGIN
 
 -- Eliminar tablas temporales
 	DROP TABLE #RegistrosTransformados;
- 	DROP TABLE #tbVendedor
-	DROP TABLE #tbComprador
-	DROP TABLE #tbDivisa
-	DROP TABLE #tbPais
-	DROP TABLE #tbProvincia
-	DROP TABLE #tbCiudad
-	DROP TABLE #tbInmueble
-	DROP TABLE #tbOperacion
-	DROP TABLE #tbVentas
+ 	DROP TABLE #tbVendedor;
+	DROP TABLE #tbComprador;
+	DROP TABLE #tbDivisa;
+	DROP TABLE #tbPais;
+	DROP TABLE #tbProvincia;
+	DROP TABLE #tbCiudad;
+	DROP TABLE #tbInmueble;
+	DROP TABLE #tbOperacion;
+	DROP TABLE #tbVentas;
 
 END;
 GO
