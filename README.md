@@ -248,7 +248,7 @@ GO
 
 ## 3.) Creación de funciones para la limpieza de datos y procedimientos almacenados para la carga de datos según el modelo planteado
 ```sql
---3.1) Convertir fecha
+--3.1.1) Convertir fecha
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -274,7 +274,7 @@ BEGIN
 END;
 ```
 ```sql
---3.2) Extraer valor numérico con moneda
+--3.1.2) Extraer valor numérico con moneda
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -298,7 +298,7 @@ END;
 GO
 ```
 ```sql
---3.3) Limpiar cédula
+--3.1.3) Limpiar cédula
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -319,7 +319,7 @@ END;
 GO
 ```
 ```sql
---3.4) Limpiar metros
+--3.1.4) Limpiar metros
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -343,7 +343,7 @@ END;
 GO
 ```
 ```sql
---3.5) Limpiar registro
+--3.1.5) Limpiar registro
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -365,7 +365,7 @@ END;
 GO
 ```
 ```sql
---3.6) Separar fecha y hora
+--3.1.6) Separar fecha y hora
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
